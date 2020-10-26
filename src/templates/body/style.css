@@ -1,0 +1,12 @@
+.body-content {
+  display: flex;
+  padding: 20px;
+}
+
+.content {
+  padding: 60px;
+}
+
+.content p {
+  color: #b0b0b0;
+}

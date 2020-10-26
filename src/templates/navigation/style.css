@@ -1,0 +1,27 @@
+.nav-container {
+  display: flex;
+  padding: 20px 50px;
+  border-bottom: #162d5c;
+  justify-content: flex-end;
+  border-bottom: 1px 1px #162d5c;
+}
+
+.nav-menu {
+  margin-left: 20px;
+  font-size: 18px;
+  font-weight: 300;
+  color: #3252df;
+  cursor: pointer;
+}
+
+.nav-menu.first {
+  flex: 1;
+  font-weight: 700;
+  font-size: 22px;
+  vertical-align: text-bottom;
+  text-shadow: 1px 0px gray;
+}
+
+.hidden {
+  display: noen;
+}

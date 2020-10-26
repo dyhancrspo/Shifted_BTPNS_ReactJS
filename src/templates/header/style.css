@@ -1,0 +1,18 @@
+.header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.imgHeader {
+  display: flex;
+  height: 600px;
+  width: 1263px;
+  object-fit: cover;
+}
+
+.headerText {
+  margin-top: 15em;
+  position: absolute;
+  color: #ffff;
+  text-shadow: 2px 2px #000000;
+}

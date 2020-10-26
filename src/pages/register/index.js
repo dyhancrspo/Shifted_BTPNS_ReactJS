@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { InputField, RowInput } from "../../components";
+import { Redirect } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
@@ -25,28 +26,18 @@ class Register extends Component {
   };
 
   //  Fungsi Register
-  onRegister = async () => {
+  onRegister = () => {
     const { fullname, username, password } = this.state;
-
     this.props.addingNewUser({ fullname, username, password });
-
-    // let oldUsers = this.state.users;
-    // oldUsers.push({
-    //   fullname,
-    //   username,
-    //   password,
-    // });
-    // await this.setState({
-    //   users: oldUsers,
-    // });
     alert(fullname + ",  Yeay!! Pendaftaranmu berhasil!");
 
     // Log
     console.log(this.state.users);
-    console.log("Sukses Regis : ", fullname, "/", username, "=>>", password);
+    console.log("Sukses Regis : ", fullname, "/", username, "=>", password);
   };
 
   render() {
+    if (this.props.statusLoggedIn) return <Redirect to="/login" />;
     return (
       <div className="form-group row">
         <div className="">

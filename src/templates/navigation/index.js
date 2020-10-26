@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Menu } from "../../components";
+
 import "./style.css";
 
 class Nav extends Component {
@@ -7,6 +9,14 @@ class Nav extends Component {
     super(props);
     this.state = {};
   }
+
+  shouldComponentUpdate(lastProp, nextProp) {
+    console.log("props: ", this.props);
+    console.log("lastProp: ", lastProp);
+    if (lastProp.statusLoggedIn !== this.props.statusLoggedIn) return true;
+    return false;
+  }
+
   render() {
     return (
       <div className="nav-container">
@@ -15,21 +25,29 @@ class Nav extends Component {
           class="first"
           goToPage={() => this.props.changePage("home")}
         />
-        <Menu text="Home" goToPage={() => this.props.changePage("home")} />
-        <Menu text="About" goToPage={() => this.props.changePage("about")} />
+        <Link to="/">
+          <Menu text="Home" goToPage={() => this.props.changePage("home")} />
+        </Link>
+        <Link to="/about">
+          <Menu text="About" goToPage={() => this.props.changePage("about")} />
+        </Link>
 
         {this.props.statusLoggedIn ? (
           <Menu text="Logout" goToPage={this.props.changeLoggedIn} />
         ) : (
           <>
-            <Menu
-              text="Login"
-              goToPage={() => this.props.changePage("login")}
-            />
-            <Menu
-              text="Join Now"
-              goToPage={() => this.props.changePage("register")}
-            />
+            <Link to="/login">
+              <Menu
+                text="Login"
+                goToPage={() => this.props.changePage("login")}
+              />
+            </Link>
+            <Link to="/register">
+              <Menu
+                text="Join Now"
+                goToPage={() => this.props.changePage("register")}
+              />
+            </Link>
           </>
         )}
       </div>

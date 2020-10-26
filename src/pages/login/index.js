@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { InputField, RowInput } from "../../components";
 
 class Login extends Component {
@@ -26,21 +27,20 @@ class Login extends Component {
   //   Fungsi Login
   onLogin = () => {
     const { username, password } = this.state;
-
     const exist = this.props.listUsers.find(
       (user) => user.username === username && user.password === password
     );
     if (exist) {
-      alert(`Hei! ${exist.fullname}, 
-      Selamat kamu berhasil Login!`);
+      alert(`Hei! ${exist.fullname}, Selamat kamu berhasil Login!`);
       this.props.changeLoggedIn();
       console.log("Login  :", username, "=>", password);
     } else {
-      alert("User gaada!");
+      alert("User / Password yang anda masukkan salah!!!");
     }
   };
 
   render() {
+    if (this.props.statusLoggedIn) return <Redirect to="/about" />;
     return (
       <div className="form-group row">
         <div className="">

@@ -2,13 +2,24 @@ import React, { Component } from "react";
 import { Header, Nav, Body, Footer } from "./templates";
 import "./App.css";
 
+/*
+Browser Router
+
+
+*/
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "register",
+      page: "home",
       isLoggedIn: false,
     };
+  }
+
+  shouldComponentUpdate(lastProp) {
+    if (lastProp.page !== this.state.page) return true;
+    return false;
   }
 
   onClickButton = (page) => {
@@ -30,7 +41,10 @@ class App extends Component {
           changePage={this.onClickButton}
         />
         <Header />
-        <Body changeLoggedIn={this.changeLoggedIn} page={this.state.page} />
+        <Body
+          statusLoggedIn={this.state.isLoggedIn}
+          changeLoggedIn={this.changeLoggedIn}
+        />
         <Footer />
       </>
     );

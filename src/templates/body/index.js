@@ -9,34 +9,95 @@ class Body extends Component {
     super(props);
     this.state = {
       users: [],
+      admin: [
+        {
+          name: "Administratot",
+          username: "admin",
+          password: "rahasia",
+          roleType: "Admin",
+        },
+        {
+          name: "Super Admin",
+          username: "superadmin",
+          password: "rahasia",
+          roleType: "Admin",
+        },
+      ],
+      // defaultPassword: "test",
+      // defaultRoleType: "User",
+      // listUserAPI: [],
     };
   }
 
+  componentDidMount = async () => {
+    // Fetching Api from Json Placeholder
+    await fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((json) => {
+        const dataUsers = json.map((user) => {
+          return { ...user, password: "test", roleType: "User" };
+        });
+        console.info("Data User: ", dataUsers);
+        this.setState({
+          users: [...dataUsers, ...this.state.admin],
+        });
+      });
+  };
+
   addUsers = (obj) => {
-    const { fullname, username, password } = obj;
+    const { name, username, password } = obj;
     let oldUsers = this.state.users;
     oldUsers.push({
-      fullname,
+      name,
       username,
       password,
+      roleType: "User",
     });
     this.setState({
       users: oldUsers,
     });
   };
 
-  showPage = () => {
-    const { changeLoggedIn, statusLoggedIn } = this.props;
+  /* old fetching method
+  componentDidMount = async () => {
+    // Fetching Api from Json Placeholder
+    await fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((json) => this.setState({ listUserAPI: json }));
+    const userAPI = this.state.users;
+    this.state.listUserAPI.forEach((user) => {
+      let obj = {
+        name: user.name,
+        username: user.username,
+        password: this.state.defaultPassword,
+        roleType: this.state.defaultRoleType,
+      };
+      userAPI.push(obj);
+    });
+    this.setState({
+      users: userAPI,
+    });
+    console.log(userAPI);
+  };
 
-    // if (page === "home") return <Home />;
-    // if (page === "about") return <About />;
-    // if (page === "login") return;
-    // <Login
-    //   listUsers={this.state.users}
-    //   changeLoggedIn={this.props.changeLoggedIn}
-    // />;
-    // if (page === "register") return;
-    // <Register listUsers={this.state.user} addingNewUser={this.addUsers} />;
+  addUsers = (obj) => {
+    const { name, username, password } = obj;
+    let oldUsers = this.state.users;
+    oldUsers.push({
+      name,
+      username,
+      password,
+      roleType: "Administrator",
+    });
+    this.setState({
+      users: oldUsers,
+    });
+  }; 
+  */
+
+  // Show Page Function (nav/body)
+  showPage = () => {
+    const { changeLoggedIn } = this.props;
 
     return (
       <Switch>
@@ -44,7 +105,11 @@ class Body extends Component {
         <Route
           path="/about"
           children={(props) => (
-            <About {...props} statusLoggedIn={this.props.statusLoggedIn} />
+            <About
+              {...props}
+              listUsers={this.state.users}
+              statusLoggedIn={this.props.statusLoggedIn}
+            />
           )}
         />
         {/* <Route path="/login" component={Login}>
@@ -61,9 +126,7 @@ class Body extends Component {
             />
           )}
         />
-        {/* <Route path="/register" component={Register}>
-          <Register listUsers={this.state.user} addingNewUser={this.addUsers} />
-        </Route> */}
+
         <Route path="/register" component={Register}>
           <Register listUsers={this.state.user} addingNewUser={this.addUsers} />
         </Route>

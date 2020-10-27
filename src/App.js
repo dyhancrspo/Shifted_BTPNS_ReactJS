@@ -2,12 +2,6 @@ import React, { Component } from "react";
 import { Header, Nav, Body, Footer } from "./templates";
 import "./App.css";
 
-/*
-Browser Router
-
-
-*/
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -17,10 +11,10 @@ class App extends Component {
     };
   }
 
-  shouldComponentUpdate(lastProp) {
-    if (lastProp.page !== this.state.page) return true;
-    return false;
-  }
+  // shouldComponentUpdate(lastProp) {
+  //   if (lastProp.page !== this.state.page) return true;
+  //   return false;
+  // }
 
   onClickButton = (page) => {
     this.setState({
@@ -28,8 +22,16 @@ class App extends Component {
     });
   };
 
+  // Change Login Status
   changeLoggedIn = () => {
     this.setState((oldState) => ({ isLoggedIn: !oldState.isLoggedIn }));
+  };
+
+  doLogin = () => {
+    this.setState({ isLoggedIn: true });
+  };
+  doLogout = () => {
+    this.setState({ isLoggedIn: false });
   };
 
   render() {

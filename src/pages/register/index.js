@@ -7,9 +7,10 @@ class Register extends Component {
     super(props);
     this.state = {
       users: [],
-      fullname: "",
+      name: "",
       username: "",
       password: "",
+      roleType: "",
     };
   }
 
@@ -27,13 +28,12 @@ class Register extends Component {
 
   //  Fungsi Register
   onRegister = () => {
-    const { fullname, username, password } = this.state;
-    this.props.addingNewUser({ fullname, username, password });
-    alert(fullname + ",  Yeay!! Pendaftaranmu berhasil!");
+    const { name, username, password, roleType } = this.state;
+    this.props.addingNewUser({ name, username, password, roleType });
+    alert(`${name},  Yeay!! Pendaftaranmu berhasil!`);
 
     // Log
-    console.log(this.state.users);
-    console.log("Sukses Regis : ", fullname, "/", username, "=>", password);
+    console.log("Sukses Regis : ", name, "/", username, "=>", password);
   };
 
   render() {
@@ -42,10 +42,10 @@ class Register extends Component {
       <div className="form-group row">
         <div className="">
           <RowInput
-            value={this.state.fullname}
+            value={this.state.name}
             label="Full Name"
             type="text"
-            name="fullname"
+            name="name"
             onChange={this.onChangeInput}
           />
           <RowInput

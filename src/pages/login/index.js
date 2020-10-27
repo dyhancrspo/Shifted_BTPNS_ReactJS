@@ -8,6 +8,7 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
+      roleType: "",
     };
   }
 
@@ -31,11 +32,11 @@ class Login extends Component {
       (user) => user.username === username && user.password === password
     );
     if (exist) {
-      alert(`Hei! ${exist.fullname}, Selamat kamu berhasil Login!`);
+      alert(`Hei! ${exist.name}, Selamat kamu berhasil Login!`);
       this.props.changeLoggedIn();
       console.log("Login  :", username, "=>", password);
     } else {
-      alert("User / Password yang anda masukkan salah!!!");
+      alert("Username atau Password yang anda masukkan salah!!!");
     }
   };
 
@@ -62,6 +63,7 @@ class Login extends Component {
             typeInput="button"
             valueInput="Login"
             onClickInput={this.onLogin}
+            className="btn btn-primary"
           />
         </div>
       </div>

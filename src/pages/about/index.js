@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
+import "./style.css";
+
 class About extends Component {
   constructor(props) {
     super(props);
@@ -12,13 +14,9 @@ class About extends Component {
 
   componentDidMount() {
     window.scrollTo({ top: 600, behavior: "smooth" });
-    // Fetching Api from Json Placeholder
-
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => this.setState({ users: json }));
   }
 
+  // Button Back to Login Page
   clickBtn = () => {
     if (this.props.statusLoggedIn) return alert("Keluar dulu! baru masuk");
     this.props.history.push("/logout");
@@ -27,18 +25,78 @@ class About extends Component {
     // });
   };
 
+  btnAdd = () => {};
+
+  // Show Data order by roleType
+  checkRole = () => {
+    // {
+    //   this.props.listUsers;
+    // }
+  };
+
   render() {
     if (!this.props.statusLoggedIn) return <Redirect to="/login" />;
 
     return (
       <>
-        ini About
         <div style={{ padding: "20px" }}>
-          <button onClick={this.clickBtn}>Go To Login</button>
+          <button className="btn btn-info" onClick={this.clickBtn}>
+            Back To Login
+          </button>
         </div>
-        {this.state.users.map((user, idx) => {
-          return <div key={idx}>Name = {user.name}</div>;
-        })}
+        <h1 id="title">Data User Table</h1>
+        <button
+          style={{ margin: "10px" }}
+          className="btn btn-primary btn-circle"
+          onClick={this.btnAdd}
+        >
+          <i className="fas fa-plus"> </i>
+        </button>
+        <table className="table table-bordered">
+          <thead align="center">
+            <tr>
+              <th>No</th>
+              <th>Full Name</th>
+              <th>Username</th>
+              <th>Type</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.listUsers.map((user, index) => {
+              return (
+                <tr key={index}>
+                  <th align="center" scope="row">
+                    {index + 1}
+                  </th>
+                  <td>{user.name}</td>
+                  <td>{user.username}</td>
+                  <td align="center">{user.roleType}</td>
+                  <td align="center">
+                    <button
+                      className="btn btn-info"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      style={{ margin: "0 20px" }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </>
     );
   }

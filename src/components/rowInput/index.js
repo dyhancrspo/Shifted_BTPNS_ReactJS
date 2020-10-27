@@ -9,9 +9,9 @@ class RowInput extends Component {
   render() {
     const { placeholder, value, name, type, label, onChange } = this.props;
     return (
-      <div className="">
-        <div className="">{label}</div>
-        <div className="form-group">
+      <div className="form-row">
+        <div className="form-group col-md-6">
+          {label}
           <InputField
             typeInput={type}
             nameInput={name}

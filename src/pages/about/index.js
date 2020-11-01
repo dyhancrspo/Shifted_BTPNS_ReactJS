@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "./style.css";
 
@@ -19,20 +20,10 @@ class About extends Component {
   // Button Back to Login Page
   clickBtn = () => {
     if (this.props.statusLoggedIn) return alert("Keluar dulu! baru masuk");
-    this.props.history.push("/logout");
-    // this.setState({
-    //   redirect: true,
-    // });
+    this.props.history.push("/login");
   };
 
   btnAdd = () => {};
-
-  // Show Data order by roleType
-  checkRole = () => {
-    // {
-    //   this.props.listUsers;
-    // }
-  };
 
   render() {
     if (!this.props.statusLoggedIn) return <Redirect to="/login" />;
@@ -85,12 +76,14 @@ class About extends Component {
                     >
                       Edit
                     </button>
-                    <button
-                      className="btn btn-danger"
-                      style={{ margin: "0 20px" }}
-                    >
-                      Delete
-                    </button>
+                    {user.roleType === "user" && (
+                      <button
+                        className="btn btn-danger"
+                        style={{ margin: "0 20px" }}
+                      >
+                        Delete
+                      </button>
+                    )}
                   </td>
                 </tr>
               );
@@ -102,4 +95,10 @@ class About extends Component {
   }
 }
 
-export default About;
+const mapStateToProps = (state) => ({
+  statusLoggedIn: state.auth.isLoggedIn,
+  usernameLogin: state.auth.username,
+});
+
+export default connect(mapStateToProps)(About);
+// export default About;

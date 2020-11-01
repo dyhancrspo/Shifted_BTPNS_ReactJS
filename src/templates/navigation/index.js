@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "../../components";
-
+import { connect } from "react-redux";
 import "./style.css";
 
 class Nav extends Component {
@@ -10,12 +10,12 @@ class Nav extends Component {
     this.state = {};
   }
 
-  shouldComponentUpdate(lastProp, nextProp) {
-    console.log("props: ", this.props);
-    console.log("lastProp: ", lastProp);
-    if (lastProp.statusLoggedIn !== this.props.statusLoggedIn) return true;
-    return false;
-  }
+  // shouldComponentUpdate(lastProp, nextProp) {
+  //   console.log("props: ", this.props);
+  //   console.log("lastProp: ", lastProp);
+  //   if (lastProp.statusLoggedIn !== this.props.statusLoggedIn) return true;
+  //   return false;
+  // }
 
   render() {
     return (
@@ -33,7 +33,7 @@ class Nav extends Component {
         </Link>
 
         {this.props.statusLoggedIn ? (
-          <Menu text="Logout" goToPage={this.props.changeLoggedIn} />
+          <Menu text="Logout" goToPage={this.props.doLogout} />
         ) : (
           <>
             <Link to="/login">
@@ -55,4 +55,13 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+const mapStateToProps = (state) => ({
+  statusLoggedIn: state.auth.isLoggedIn,
+});
+const mapDispacthToProps = (dispatch) => ({
+  doLogout: () => dispatch({ type: "Logout" }),
+});
+
+export default connect(mapStateToProps, mapDispacthToProps)(Nav);
+
+// export default Nav;

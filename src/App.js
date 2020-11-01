@@ -38,14 +38,16 @@ class App extends Component {
     return (
       <>
         <Nav
-          statusLoggedIn={this.state.isLoggedIn}
-          changeLoggedIn={this.changeLoggedIn}
+          // statusLoggedIn={this.state.isLoggedIn}
+          // changeLoggedIn={this.changeLoggedIn}
           changePage={this.onClickButton}
         />
         <Header />
         <Body
           statusLoggedIn={this.state.isLoggedIn}
           changeLoggedIn={this.changeLoggedIn}
+          page={this.state.page}
+          changePage={this.onClickButton}
         />
         <Footer />
       </>

@@ -29,6 +29,21 @@ class Body extends Component {
     };
   }
 
+  // componentDidMount = async () => {
+  //   // Fetching Api from Json Placeholder
+  //   await fetch("https://jsonplaceholder.typicode.com/users")
+  //     .then((response) => response.json())
+  //     .then((json) => {
+  //       const dataUsers = json.map((user) => {
+  //         return { ...user, password: "test", roleType: "User" };
+  //       });
+  //       console.info("Data User: ", dataUsers);
+  //       this.setState({
+  //         users: [...dataUsers, ...this.state.admin],
+  //       });
+  //     });
+  // };
+
   componentDidMount = async () => {
     // Fetching Api from Json Placeholder
     await fetch("https://jsonplaceholder.typicode.com/users")
@@ -97,7 +112,7 @@ class Body extends Component {
 
   // Show Page Function (nav/body)
   showPage = () => {
-    const { changeLoggedIn } = this.props;
+    const { statusLoggedIn, changeLoggedIn } = this.props;
 
     return (
       <Switch>
@@ -112,18 +127,11 @@ class Body extends Component {
             />
           )}
         />
-        {/* <Route path="/login" component={Login}>
-          <Login listUsers={this.state.users} changeLoggedIn={changeLoggedIn} />
-        </Route> */}
+
         <Route
           path="/login"
           children={(props) => (
-            <Login
-              {...props}
-              listUsers={this.state.users}
-              changeLoggedIn={changeLoggedIn}
-              statusLoggedIn={this.props.statusLoggedIn}
-            />
+            <Login {...props} listUsers={this.state.users} />
           )}
         />
 

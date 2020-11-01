@@ -8,10 +8,6 @@ class Home extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    window.scrollTo({ top: 800, behavior: "smooth" });
-  }
-
   render() {
     return (
       <div className="home-content">

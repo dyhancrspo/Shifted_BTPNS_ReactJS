@@ -28,11 +28,11 @@ class Login extends Component {
   // Fungsi Login
   onLogin = () => {
     const { username, password } = this.state;
-    const exist = this.props.listUsers.find(
+    let statusLoggedIn = this.props.listUsers.find(
       (user) => user.username === username && user.password === password
     );
-    if (exist) {
-      alert(`Hei! ${exist.name}, Selamat kamu berhasil Login!`);
+    if (statusLoggedIn) {
+      alert(`Hei! ${statusLoggedIn.name}, Selamat kamu berhasil Login!`);
       this.props.doLogin(username);
       // this.props.changeLoggedIn();
       console.log("Login  :", username, "=>", password);
@@ -85,8 +85,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  doFetch: (listUsers) =>
-    dispatch({ type: "FETCH", payload: { dataUsers: listUsers } }),
+  doFetch: (data) => dispatch({ type: "FETCH", payload: { dataUsers: data } }),
   doLogin: (user) => dispatch({ type: "LOGIN", payload: { username: user } }),
 });
 

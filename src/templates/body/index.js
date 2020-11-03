@@ -22,10 +22,10 @@ class Body extends Component {
   }
 
   // componentDidMount = async () => {
-  //   // Fetching Api from Json Placeholder
+  //   // Fetching Api from API
   //   await fetch("http://localhost:3333/user")
   //     .then((response) => response.json())
-  //     .then((json) => this.props.doFetch(json));
+  //     .then((json) => this.props.doFetch(json.users));
   // };
 
   componentDidMount = async () => {
@@ -43,6 +43,20 @@ class Body extends Component {
         });
       });
   };
+
+  // componentDidMount = () => {
+  //   fetch("http://localhost:3333/user")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const users = data.map((user) => ({
+  //         ...user,
+  //       }));
+
+  //       this.props.doFetch({
+  //         users: [...users],
+  //       });
+  //     });
+  // };
 
   addUsers = (obj) => {
     const { name, username, password } = obj;

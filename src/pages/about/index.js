@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { DetailUser, EditUser } from "../../components";
+import { Button } from "react-bootstrap";
 
 import "./style.css";
 
@@ -23,8 +25,18 @@ class About extends Component {
     this.props.history.push("/login");
   };
 
-  btnAdd = () => {
-    return <Link to="/register" />;
+  deleteUser = async (index) => {
+    await fetch("http://localhost:3333/user/" + index, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+    window.location.reload();
   };
 
   render() {
@@ -66,24 +78,20 @@ class About extends Component {
                   <td>{user.username}</td>
                   <td align="center">{user.roleType}</td>
                   <td align="center">
-                    <button
-                      className="btn btn-info"
+                    <DetailUser user={this.props.listUsers} index={index} />
+                    <EditUser user={this.props.listUsers} index={index} />
+                    <Button
                       style={{ marginLeft: "20px" }}
-                    >
-                      View
-                    </button>
-                    <button
-                      className="btn btn-secondary"
-                      style={{ marginLeft: "20px" }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      style={{ margin: "0 20px" }}
+                      size="sm"
+                      variant="danger"
+                      onClick={() => {
+                        if (window.confirm("Apakah Data Ingin Dihapus?"))
+                          this.deleteUser(user.username);
+                      }}
                     >
                       Delete
-                    </button>
+                    </Button>
+
                     {/* {user.roleType === "User" && (
                       <>
                         <button

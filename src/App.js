@@ -11,11 +11,6 @@ class App extends Component {
     };
   }
 
-  // shouldComponentUpdate(lastProp) {
-  //   if (lastProp.page !== this.state.page) return true;
-  //   return false;
-  // }
-
   onClickButton = (page) => {
     this.setState({
       page,
@@ -37,11 +32,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <Nav
-          // statusLoggedIn={this.state.isLoggedIn}
-          // changeLoggedIn={this.changeLoggedIn}
-          changePage={this.onClickButton}
-        />
+        <Nav changePage={this.onClickButton} />
         <Header />
         <Body
           statusLoggedIn={this.state.isLoggedIn}

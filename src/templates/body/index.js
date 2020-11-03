@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Home, About, Login, Register } from "../../pages";
 import { Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "./style.css";
 
@@ -11,46 +12,30 @@ class Body extends Component {
       users: [],
       admin: [
         {
-          name: "Administratot",
-          username: "admin",
-          password: "rahasia",
-          roleType: "Admin",
-        },
-        {
           name: "Super Admin",
           username: "superadmin",
           password: "rahasia",
           roleType: "Admin",
         },
       ],
-      // defaultPassword: "test",
-      // defaultRoleType: "User",
-      // listUserAPI: [],
     };
   }
 
   // componentDidMount = async () => {
   //   // Fetching Api from Json Placeholder
-  //   await fetch("https://jsonplaceholder.typicode.com/users")
+  //   await fetch("http://localhost:3333/user")
   //     .then((response) => response.json())
-  //     .then((json) => {
-  //       const dataUsers = json.map((user) => {
-  //         return { ...user, password: "test", roleType: "User" };
-  //       });
-  //       console.info("Data User: ", dataUsers);
-  //       this.setState({
-  //         users: [...dataUsers, ...this.state.admin],
-  //       });
-  //     });
+  //     .then((json) => this.props.doFetch(json));
   // };
 
   componentDidMount = async () => {
     // Fetching Api from Json Placeholder
-    await fetch("https://jsonplaceholder.typicode.com/users")
+    await fetch("http://localhost:3333/user")
+      // await fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((json) => {
         const dataUsers = json.map((user) => {
-          return { ...user, password: "test", roleType: "User" };
+          return { ...user };
         });
         console.info("Data User: ", dataUsers);
         this.setState({
@@ -72,43 +57,6 @@ class Body extends Component {
       users: oldUsers,
     });
   };
-
-  /* old fetching method
-  componentDidMount = async () => {
-    // Fetching Api from Json Placeholder
-    await fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => this.setState({ listUserAPI: json }));
-    const userAPI = this.state.users;
-    this.state.listUserAPI.forEach((user) => {
-      let obj = {
-        name: user.name,
-        username: user.username,
-        password: this.state.defaultPassword,
-        roleType: this.state.defaultRoleType,
-      };
-      userAPI.push(obj);
-    });
-    this.setState({
-      users: userAPI,
-    });
-    console.log(userAPI);
-  };
-
-  addUsers = (obj) => {
-    const { name, username, password } = obj;
-    let oldUsers = this.state.users;
-    oldUsers.push({
-      name,
-      username,
-      password,
-      roleType: "Administrator",
-    });
-    this.setState({
-      users: oldUsers,
-    });
-  }; 
-  */
 
   // Show Page Function (nav/body)
   showPage = () => {
@@ -136,7 +84,10 @@ class Body extends Component {
         />
 
         <Route path="/register" component={Register}>
-          <Register listUsers={this.state.user} addingNewUser={this.addUsers} />
+          <Register
+            listUsers={this.state.users}
+            addingNewUser={this.addUsers}
+          />
         </Route>
       </Switch>
     );
@@ -153,4 +104,8 @@ class Body extends Component {
   }
 }
 
-export default Body;
+const mapDispatchToProps = (dispatch) => ({
+  doFetch: (data) => dispatch({ type: "FETCH", payload: { dataUsers: data } }),
+});
+
+export default connect(null, mapDispatchToProps)(Body);

@@ -4,7 +4,7 @@ import DataUsersReducer from "./datafetch";
 
 const AllReducers = combineReducers({
   auth: AuthReducer,
-  dataFetch: DataUsersReducer,
+  data: DataUsersReducer,
 });
 
 export default AllReducers;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./style.css";
@@ -23,7 +23,9 @@ class About extends Component {
     this.props.history.push("/login");
   };
 
-  btnAdd = () => {};
+  btnAdd = () => {
+    return <Link to="/register" />;
+  };
 
   render() {
     if (!this.props.statusLoggedIn) return <Redirect to="/login" />;
@@ -76,14 +78,28 @@ class About extends Component {
                     >
                       Edit
                     </button>
-                    {user.roleType === "user" && (
-                      <button
-                        className="btn btn-danger"
-                        style={{ margin: "0 20px" }}
-                      >
-                        Delete
-                      </button>
-                    )}
+                    <button
+                      className="btn btn-danger"
+                      style={{ margin: "0 20px" }}
+                    >
+                      Delete
+                    </button>
+                    {/* {user.roleType === "User" && (
+                      <>
+                        <button
+                          className="btn btn-info"
+                          style={{ marginLeft: "20px" }}
+                        >
+                          View
+                        </button>
+                        <button
+                          className="btn btn-secondary"
+                          style={{ marginLeft: "20px" }}
+                        >
+                          Edit
+                        </button>
+                      </>
+                    )} */}
                   </td>
                 </tr>
               );

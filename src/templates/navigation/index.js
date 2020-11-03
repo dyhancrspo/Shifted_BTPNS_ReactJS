@@ -59,7 +59,7 @@ const mapStateToProps = (state) => ({
   statusLoggedIn: state.auth.isLoggedIn,
 });
 const mapDispacthToProps = (dispatch) => ({
-  doLogout: () => dispatch({ type: "Logout" }),
+  doLogout: () => dispatch({ type: "LOGOUT" }),
 });
 
 export default connect(mapStateToProps, mapDispacthToProps)(Nav);

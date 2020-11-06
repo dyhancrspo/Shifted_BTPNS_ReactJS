@@ -56,13 +56,9 @@ class EditUser extends Component {
     window.location.reload();
   };
   handleEdit = () => {
-    const { name, username, password, passwordConfirm, roleType } = this.state;
-    if (password === passwordConfirm) {
-      this.editProfil({ name, username, password, roleType }, username);
-      window.alert("Data telah tersimpan");
-    } else {
-      window.alert("Password tidak sama");
-    }
+    const { name, username, password, roleType } = this.state;
+    this.editProfil({ name, username, password, roleType }, username);
+    window.alert("Data telah tersimpan");
   };
   render() {
     const user = this.props.user;

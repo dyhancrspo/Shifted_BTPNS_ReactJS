@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { DetailUser, EditUser } from "../../components";
 import { Button } from "react-bootstrap";
 
+import jwt from "jwt-decode";
+
 import "./style.css";
 
 class About extends Component {
@@ -15,9 +17,33 @@ class About extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     window.scrollTo({ top: 600, behavior: "smooth" });
-  }
+    this.fetchingUserData();
+  };
+
+  //  Fetch Data User
+  fetchingUserData = async () => {
+    try {
+      await fetch("http://localhost:8888/users", {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.dataLogin.token,
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          this.setState({
+            users: result.data[0].data,
+          });
+        });
+    } catch (error) {
+      console.log("Anda telah logout");
+    }
+  };
 
   // Button Back to Login Page
   clickBtn = () => {
@@ -25,27 +51,31 @@ class About extends Component {
     this.props.history.push("/login");
   };
 
-  deleteUser = async (index) => {
-    await fetch("http://localhost:3333/user/" + index, {
+  // DELETE User fffrom Dtabase
+  deleteUser = async (username) => {
+    await fetch("http://localhost:8888/users/delete/" + username, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: "Bearer " + this.props.dataLogin.token,
       },
     })
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((response) => response.json())
+      .then((result) => {
+        window.alert(result.message);
+      })
       .catch((error) => console.log("error", error));
-    window.location.reload();
+    this.fetchingUserData();
   };
 
   render() {
     if (!this.props.statusLoggedIn) return <Redirect to="/login" />;
-
+    const userList = this.state.users;
     return (
       <>
         <div style={{ padding: "20px" }}>
-          <button className="btn btn-info" onClick={this.clickBtn}>
+          <button className="btn btn-secondary" onClick={this.clickBtn}>
             Back To Login
           </button>
         </div>
@@ -68,7 +98,7 @@ class About extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.listUsers.map((user, index) => {
+            {userList.map((user, index) => {
               return (
                 <tr key={index}>
                   <th align="center" scope="row">
@@ -76,10 +106,44 @@ class About extends Component {
                   </th>
                   <td>{user.name}</td>
                   <td>{user.username}</td>
-                  <td align="center">{user.roleType}</td>
+                  <td align="center">{user.role}</td>
                   <td align="center">
-                    <DetailUser user={this.props.listUsers} index={index} />
-                    <EditUser user={this.props.listUsers} index={index} />
+                    {/* <DetailUser
+                      fetchdata={this.fetchingUserData}
+                      user={user}
+                      index={index}
+                    />
+                    <EditUser user={user} index={index} /> 
+                    <Button
+                      style={{ marginLeft: "20px" }}
+                      size="sm"
+                      variant="danger"
+                      onClick={() => {
+                        if (window.confirm("Apakah Data Ingin Dihapus?"))
+                          this.deleteUser(user.username);
+                      }}
+                    >
+                      Delete
+                    </Button>*/}
+                    <Button
+                      style={{ marginLeft: "20px" }}
+                      size="sm"
+                      variant="info"
+                      onClick={() => {
+                        // if (window.confirm("Apakah Data Ingin Dihapus?"))
+                        //   this.deleteUser(user.username);
+                      }}
+                    >
+                      Detail
+                    </Button>
+                    <Button
+                      style={{ marginLeft: "20px" }}
+                      size="sm"
+                      variant="warning"
+                      onClick={() => {}}
+                    >
+                      Edit
+                    </Button>
                     <Button
                       style={{ marginLeft: "20px" }}
                       size="sm"
@@ -91,23 +155,6 @@ class About extends Component {
                     >
                       Delete
                     </Button>
-
-                    {/* {user.roleType === "User" && (
-                      <>
-                        <button
-                          className="btn btn-info"
-                          style={{ marginLeft: "20px" }}
-                        >
-                          View
-                        </button>
-                        <button
-                          className="btn btn-secondary"
-                          style={{ marginLeft: "20px" }}
-                        >
-                          Edit
-                        </button>
-                      </>
-                    )} */}
                   </td>
                 </tr>
               );
@@ -121,7 +168,7 @@ class About extends Component {
 
 const mapStateToProps = (state) => ({
   statusLoggedIn: state.auth.isLoggedIn,
-  usernameLogin: state.auth.username,
+  dataLogin: state.auth.username,
 });
 
 export default connect(mapStateToProps)(About);

@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import { InputField, RowInput } from "../../components";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: [],
       name: "",
       username: "",
       password: "",
-      roleType: "",
+      role_id: "2",
     };
   }
 
@@ -26,14 +25,33 @@ class Register extends Component {
     console.log(e.target.value);
   };
 
+  // Fungsi Fetch Register
+  fetchingRegisterApi = async (dataRegist) => {
+    await fetch("http://localhost:8888/auth/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataRegist),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        window.alert(result.message);
+      })
+      .catch((error) => console.log("error", error));
+  };
+
   //  Fungsi Register
   onRegister = () => {
-    const { name, username, password, roleType } = this.state;
-    this.props.addingNewUser({ name, username, password, roleType });
-    alert(`${name},  Yeay!! Pendaftaranmu berhasil!`);
+    const { username, password, name, role_id } = this.state;
+    const registerData = { username, password, name, role_id };
+    this.fetchingRegisterApi(registerData);
+    // this.props.addingNewUser({ name, username, password, roleType });
+    // alert(`${name},  Yeay!! Pendaftaranmu berhasil!`);
 
-    // Log
-    console.log("Sukses Regis : ", name, "/", username, "=>", password);
+    // // Log
+    // console.log("Sukses Regis : ", name, "/", username, "=>", password);
   };
 
   render() {

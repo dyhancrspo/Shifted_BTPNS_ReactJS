@@ -20,8 +20,8 @@ class DetailUser extends Component {
     });
   };
   render() {
-    const user = this.props.user;
-    const index = this.props.index;
+    const user = this.props.userList;
+    // const index = this.props.index;
     return (
       <>
         <Button size="sm" variant="info" onClick={this.handleShow}>
@@ -33,23 +33,15 @@ class DetailUser extends Component {
           </Modal.Header>
           <Modal.Body>
             <FormLabel>Nama</FormLabel>
-            <FormControl
-              type="text"
-              value={user[index].name}
-              readOnly
-            ></FormControl>
+            <FormControl type="text" value={user.name} readOnly></FormControl>
             <FormLabel>Username</FormLabel>
             <FormControl
               type="text"
-              value={user[index].username}
+              value={user.username}
               readOnly
             ></FormControl>
             <FormLabel>Tipe Akun</FormLabel>
-            <FormControl
-              type="text"
-              value={user[index].roleType}
-              readOnly
-            ></FormControl>
+            <FormControl type="text" value={user.role} readOnly></FormControl>
           </Modal.Body>
 
           <Modal.Footer>

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { InputField, RowInput } from "../../components";
 import { Redirect, Link } from "react-router-dom";
 
+const API = process.env.REACT_APP_API;
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,7 @@ class Register extends Component {
 
   // Fungsi Fetch Register
   fetchingRegisterApi = async (dataRegist) => {
-    await fetch("http://localhost:8888/auth/register", {
+    await fetch(`${API}auth/register`, {
       method: "POST",
       headers: {
         Accept: "application/json",

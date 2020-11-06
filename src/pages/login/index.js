@@ -3,6 +3,8 @@ import { InputField, RowInput } from "../../components";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+const API = process.env.REACT_APP_API;
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,7 @@ class Login extends Component {
 
   //  LOGIN by Data on DB
   fetchingLoginApi = async (dataLogin) => {
-    await fetch("http://localhost:8888/auth/login", {
+    await fetch(`${API}auth/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",

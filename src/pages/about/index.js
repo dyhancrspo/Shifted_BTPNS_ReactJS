@@ -3,10 +3,10 @@ import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { DetailUser, EditUser } from "../../components";
 import { Button } from "react-bootstrap";
-
-import jwt from "jwt-decode";
-
+// import jwt from "jwt-decode";
 import "./style.css";
+
+const API = process.env.REACT_APP_API;
 
 class About extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class About extends Component {
   //  Fetch Data User
   fetchingUserData = async () => {
     try {
-      await fetch("http://localhost:8888/users", {
+      await fetch(`${API}users`, {
         mode: "cors",
         method: "GET",
         headers: {
@@ -53,7 +53,7 @@ class About extends Component {
 
   // DELETE User fffrom Dtabase
   deleteUser = async (username) => {
-    await fetch("http://localhost:8888/users/delete/" + username, {
+    await fetch(`${API}users/delete/` + username, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
